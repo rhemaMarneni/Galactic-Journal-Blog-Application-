@@ -1,0 +1,18 @@
+*{
+    box-sizing: border-box;
+}
+
+.navbar{
+    background-color: #000;
+    display: flex;
+    width: 100vw;
+}
+
+.home-btn{
+    color: #fff;
+}
+
+.home-btn:hover{
+    text-decoration: underline;
+    color: #fff;
+}
