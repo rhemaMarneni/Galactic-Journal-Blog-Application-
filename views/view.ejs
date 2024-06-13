@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galactic Journal</title>
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+
+<body>
+    <%- include("partials/header.ejs") %>
+    <div class="content-container">
+        <% if(locals.post){ %>
+        <h1><%= post.post_title %></h1>
+        <p><%= post.post_date%></p>
+        <p><%= post.post_desc%></p>
+        <div style="display: flex; flex-direction: row; gap: 10px;">
+            <form action="/editpost" method="POST">
+                <input type="hidden" name="postId" value="<%= post.post_id %>">
+                <button type="submit" class="btn btn-sm btn-secondary">Edit Post</button>
+            </form>
+            <form action="/deletepost" method="POST" onsubmit="return confirmDelete();">
+                <input type="hidden" name="postId" value="<%= post.post_id %>">
+                <input type="hidden" name="confirmationStatus" id="confirmationStatus" value="">
+                <button type="submit" class="btn btn-sm btn-danger">Delete Post</button>
+            </form>
+            <% } %>
+        </div>
+    </div>
+    
+
+
+    <%- include("partials/footer.ejs") %>
+
+    <script>
+        function confirmDelete(){
+            var confirmation = confirm("Do you really want to delete this post?");
+            document.getElementById("confirmationStatus").value = confirmation;
+            return confirmation;
+        }
+    </script>
+</body>
+

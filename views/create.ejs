@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galactic Journal</title>
+    <link rel="stylesheet" href="/styles/main.css">
+    <style>
+      body{
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh; 
+        margin: 0;
+      }
+    </style>
+</head>
+
+<body>
+  <%- include("partials/header.ejs") %>
+
+<div class="form-container">
+  <div class="form-content">
+      <h1>Create New Post</h1> 
+        <form action="/createpost" method="POST" class="form-inputs">
+          <label for="title"><strong>Title:</strong></label>
+          <input name="title" type="text" class="post-data" placeholder="Title (70 characters max)" maxlength="70" required/>
+          <label for="desc"><strong>Content:</strong></label>
+          <textarea name="desc" class="post-data" placeholder="Content" required></textarea>
+  
+          <div class="btn-row">
+            <input type="submit" value="Cancel" formaction="/" formmethod="GET" class="btn btn-outline-danger" formnovalidate/>
+            <input type="submit" value="Submit" class="btn btn-success"/>
+          </div>
+          
+        </form>
+  </div>
+</div>
+
+
+<%- include("partials/footer.ejs") %>
+</body>
