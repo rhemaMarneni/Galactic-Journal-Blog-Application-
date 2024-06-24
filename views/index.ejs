@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galactic Journal</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header Image -->
+    <div class="p-5 mb-4 bg-body-secondary rounded-3 main-image">
+        <div class="login-section">
+            <% if (user) { %>
+            <div style="display: flex; flex-direction: row;">
+                <div style="color: #dbdbdb; margin-right: 10px; display: flex; align-items: center;">Welcome, <%= user.name %></div>
+                <a class="login-btn" href="/logout">Logout</a>
+            </div>
+            <%} else { %>
+            <div style="display: flex; flex-direction: row;">
+                <a class="login-btn" href="/login" role="button">Login/Register</a>
+            </div>
+            <% } %>
+        </div>
+        <div class="container-fluid py-5 main-image-flex GJ-heading">
+          <h1 class="title" style="text-shadow: -2px 1px 2px pink;">Galactic&nbsp;</h1>
+          <h1 class="title" style="text-shadow: 2px 1px 2px pink;">Journal</h1>
+        </div>
+    </div>
+    <!-- Create blog button -->
+    <div class="create-container mx-3">
+        <% if (user) { %>
+        <form class="mx-3" action="/" method="GET">
+            <button type="submit" class="btn btn-secondary create-btn">All Posts</button>
+        </form>
+        <form class="mx-3" action="/userposts" method="GET">
+            <button type="submit" class="btn btn-secondary create-btn">Your Posts</button>
+        </form>
+        <% } %>
+        <form action="/create" method="GET">
+            <button type="submit" class="btn btn-dark create-btn">+ Create Blog</button>
+        </form>
+    </div>
+    
+    <!-- Blog Articles -->
+    <div class="container">
+        <h1 class="mb-4" style="font-family: 'Roboto Mono', monospace;"><%= title %></h1>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        <% if(locals.blogPosts){ %>
+            <% blogPosts.forEach(post => { %>
+            <div class="col mb-3">
+                <div class="card shadow-sm pt-1 ">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>blog image</title><image href="https://images.unsplash.com/photo-1417733403748-83bbc7c05140?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" width="100%" height="100%" /></svg>
+                <div class="card-body">
+                    <h4 class="card-title"><%= post.post_title %></h4>
+                    <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                        <form action="/viewpost" method="POST">
+                            <input type="hidden" name="postId" value="<%= post.post_id %>">
+                            <button type="submit" class="btn btn-sm btn-primary">View</button>
+                        </form>
+                    </div>
+                    </div> 
+                </div>
+                </div>
+            </div>
+            <% }) %>
+        <% } %>
+        </div>
+      </div>
+</body>
+</html>
