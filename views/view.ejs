@@ -11,11 +11,17 @@
     <%- include("partials/header.ejs") %>
     <div class="content-container">
         <% if(locals.post){ %>
+<<<<<<< HEAD
             <h1><%= post.post_title %></h1>
             <p><%= post.post_date%> <% if(locals.author){ %> <em>by</em>&nbsp;<%= author %></p> <% } %>
             <p><%= post.post_desc%></p> 
         <% } %>
         <% if(locals.isAuthor){ %>
+=======
+        <h1><%= post.post_title %></h1>
+        <p><%= post.post_date%></p>
+        <p><%= post.post_desc%></p>
+>>>>>>> 457b1ae8f1e8a18dc1f3c888431540d6f81425ea
         <div style="display: flex; flex-direction: row; gap: 10px;">
             <form action="/editpost" method="POST">
                 <input type="hidden" name="postId" value="<%= post.post_id %>">
@@ -26,7 +32,11 @@
                 <input type="hidden" name="confirmationStatus" id="confirmationStatus" value="">
                 <button type="submit" class="btn btn-sm btn-danger">Delete Post</button>
             </form>
+<<<<<<< HEAD
         <% } %>
+=======
+            <% } %>
+>>>>>>> 457b1ae8f1e8a18dc1f3c888431540d6f81425ea
         </div>
     </div>
     

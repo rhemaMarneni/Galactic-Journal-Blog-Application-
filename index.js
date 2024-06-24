@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
+<<<<<<< HEAD
 import bcrypt from "bcrypt";
 import passport from "passport";
 import { Strategy } from "passport-local";
@@ -44,10 +45,25 @@ const db = new pg.Client({
   database: process.env.PG_DATABASE,
   password: process.env.PG_PASSWORD,
   port: process.env.PG_PORT,
+=======
+
+const app = express();
+const port = 3000;
+
+let blogPosts = []
+
+const db = new pg.Client({
+    user: "postgres",
+    host: "localhost",
+    database: "Galactic Journal",
+    password: "password",
+    port: "5432"
+>>>>>>> 457b1ae8f1e8a18dc1f3c888431540d6f81425ea
 })
 
 db.connect();
 
+<<<<<<< HEAD
 async function getUserPosts(...args){
     try{
         let blogPosts = []
@@ -71,20 +87,41 @@ async function getUserPosts(...args){
 function isValidEmail(email) {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
+=======
+
+//middleware
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public")); //for static files
+
+async function getUserPosts(user_id){
+    const result = await db.query("SELECT * FROM blogposts WHERE user_id = $1",[user_id]);
+    let blogPosts = []
+    result.rows.forEach((post)=>{
+        blogPosts.push(post);
+    })
+    return blogPosts;
+>>>>>>> 457b1ae8f1e8a18dc1f3c888431540d6f81425ea
 }
 
 //homepage
 app.get("/", async (req,res)=>{
     try{
+<<<<<<< HEAD
         const blogPosts = await getUserPosts();
         // console.log(blogPosts);
         res.render("index.ejs",{blogPosts:blogPosts, user: req.user, title:"Most Recent Posts"});
+=======
+        const blogPosts = await getUserPosts(1); 
+        // console.log(blogPosts);
+        res.render("index.ejs",{blogPosts:blogPosts});
+>>>>>>> 457b1ae8f1e8a18dc1f3c888431540d6f81425ea
     }
     catch(err){
         console.log(err);
     }
 })
 
+<<<<<<< HEAD
 //login
 app.get("/login",(req,res)=>{
     res.render("login.ejs")
@@ -179,10 +216,16 @@ app.post("/register", async (req,res)=>{
     } else{
         res.send("Passwords do not match")
     }
+=======
+//create page 
+app.get("/create",(req,res)=>{
+    res.render("create.ejs");
+>>>>>>> 457b1ae8f1e8a18dc1f3c888431540d6f81425ea
 })
 
 //create post
 app.post("/createpost",async(req,res)=>{
+<<<<<<< HEAD
     if(req.isAuthenticated()){
         try{
             const title = req.body.title;
@@ -197,6 +240,19 @@ app.post("/createpost",async(req,res)=>{
             console.log();
         }
     } else { res.redirect("/login") }
+=======
+    try{
+        const title = req.body.title;
+        const desc = req.body.desc;
+        const date = new Date();
+        await db.query("INSERT INTO blogposts (post_title,post_desc,post_date) VALUES ($1,$2,$3)",[title,desc,date]);
+
+        res.redirect("/");
+    }
+    catch(err){
+        console.log();
+    }
+>>>>>>> 457b1ae8f1e8a18dc1f3c888431540d6f81425ea
 })
 
 //delete post
@@ -218,6 +274,7 @@ app.post("/deletepost", async(req,res)=>{
 app.post("/viewpost",async (req,res)=>{
     try{
         const postId = req.body.postId;
+<<<<<<< HEAD
         const result = await db.query("SELECT * FROM blogposts WHERE post_id = $1",[postId]);
         const post = result.rows[0];
         // console.log(post)
@@ -240,12 +297,23 @@ app.post("/viewpost",async (req,res)=>{
     }
     catch(err){
         console.log(err)
+=======
+        const result = await db.query("SELECT * FROM blogposts WHERE post_id = $1 AND user_id = 1",[postId]);
+        const post = result.rows[0];
+        const postDate = new Date(post.post_date);
+        const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        post.post_date = postDate.toLocaleDateString('en-US', options);
+        res.render("view.ejs",{post: post});
+    }
+    catch(err){
+>>>>>>> 457b1ae8f1e8a18dc1f3c888431540d6f81425ea
         res.status(404).send("You've encountered the dreaded Error 404: Post not found!!");
     }
 })
 
 //edit post
 app.post("/editpost",async (req,res)=>{
+<<<<<<< HEAD
     if(req.isAuthenticated()){
         try{
             const postId = req.body.postId;
@@ -258,6 +326,17 @@ app.post("/editpost",async (req,res)=>{
             res.status(404).send("You've encountered the dreaded Error 404: Post not found!!");
         }
     } else { res.redirect("/login") }
+=======
+    try{
+        const postId = req.body.postId;
+        const result = await db.query("SELECT * FROM blogposts WHERE post_id = $1 AND user_id = 1",[postId]);
+        const post = result.rows[0];
+        res.render("edit.ejs",{post: post});
+    }
+    catch(err){
+        res.status(404).send("You've encountered the dreaded Error 404: Post not found!!");
+    }
+>>>>>>> 457b1ae8f1e8a18dc1f3c888431540d6f81425ea
 })
 
 //savepost
@@ -268,13 +347,18 @@ app.post("/savepost",async (req,res)=>{
         const desc = req.body.desc;
         const result = await db.query("UPDATE blogposts SET post_title = $1, post_desc = $2 WHERE post_id = $3 RETURNING *",[title,desc,postId]);
         const post = result.rows[0];
+<<<<<<< HEAD
         res.redirect(307,"/viewpost")
+=======
+        res.render("view.ejs",{post:post});
+>>>>>>> 457b1ae8f1e8a18dc1f3c888431540d6f81425ea
     }
     catch(err){
         res.status(404).send("You've encountered the dreaded Error 404: Post not found!!");
     }
 })
 
+<<<<<<< HEAD
 //authentication
 
 //local
@@ -348,6 +432,8 @@ passport.serializeUser((user, cb) => {
     cb(null, user);
   });
 
+=======
+>>>>>>> 457b1ae8f1e8a18dc1f3c888431540d6f81425ea
 app.listen(port, ()=>{
     console.log(`Listening on port ${port}`);
 })

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 * {
   box-sizing: border-box;
 }
@@ -284,3 +285,93 @@
     font-size: 4rem;
   }
 }/*# sourceMappingURL=main.css.map */
+=======
+*{
+    box-sizing: border-box;
+}
+
+.main-image{
+    background-image: url("../Images/themephoto.png");
+    background-size: cover;
+    height: 40vh;
+}
+
+.main-image-flex{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.create-container{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.title{
+    font-size: 8rem;
+    text-align:center;
+    color: #dbdbdb;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.card{
+    height: 350px; 
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.card-title{
+    font-size: 1rem;
+}
+
+.form-container{
+    background-color: #dbdbdb;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: auto;
+}
+
+.form-content{
+    background-color: #f6f6f6;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 35em;
+    width: 50%;
+    border-radius: 5px;
+    margin: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1), 0 6px 6px rgba(0, 0, 0, 0.1);
+}
+
+.form-inputs{
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+}
+
+.form-inputs input[type="text"],
+.form-inputs textarea{
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.form-inputs textarea {
+    height: 60%;
+    resize: none;
+}
+
+.content-container{
+    margin: 20px 40px;
+    text-align: justify;
+}
+>>>>>>> 457b1ae8f1e8a18dc1f3c888431540d6f81425ea
